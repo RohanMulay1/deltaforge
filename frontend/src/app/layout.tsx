@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const robotoMono = Roboto_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen`}>
+      <body className={`${plexSans.variable} ${plexMono.variable} antialiased min-h-screen`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -20,23 +20,23 @@ interface CardProps {
 function HUDCard({ label, value, sub, valueColor, accent }: CardProps) {
   return (
     <div
-      className="cb-card cb-hud-card px-3 py-3 cursor-default"
+      className="cb-card cb-hud-card px-5 py-4 cursor-default"
       style={accent ? { borderTop: `2px solid ${accent}` } : undefined}
     >
       <p
-        className="text-[10px] font-semibold uppercase tracking-widest mb-2"
+        className="text-[10px] font-semibold uppercase tracking-widest mb-2.5"
         style={{ color: "var(--df-text-muted, #7c828a)", letterSpacing: "0.12em" }}
       >
         {label}
       </p>
       <p
-        className="font-mono text-xl font-medium tabular-nums number-in"
-        style={{ color: valueColor ?? "var(--df-text, #ffffff)", lineHeight: 1 }}
+        className="font-mono text-2xl font-medium tabular-nums number-in"
+        style={{ color: valueColor ?? "var(--df-text, #ffffff)", letterSpacing: "-0.5px", lineHeight: 1 }}
       >
         {value}
       </p>
       {sub && (
-        <p className="font-mono text-[10px] uppercase tracking-wide mt-1.5" style={{ color: "var(--df-text-muted, #7c828a)" }}>
+        <p className="font-mono text-[10px] uppercase tracking-wide mt-2" style={{ color: "var(--df-text-muted, #7c828a)" }}>
           {sub}
         </p>
       )}
@@ -50,7 +50,7 @@ export function HUDCards({ spotPrice, expiry, ivRank, greeks }: HUDCardsProps) {
   const deltaPrefix = delta >= 0 ? "+" : ""
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
       <HUDCard
         label="Spot Price"
         value={`$${spotPrice.toFixed(2)}`}

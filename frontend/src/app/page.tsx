@@ -96,31 +96,33 @@ export default function Home() {
           <ThemeToggle />
         </div>
         <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-20 pb-12">
-          <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+          <div className="w-full max-w-5xl flex flex-col items-center">
 
-            {/* LEFT — pitch + action */}
-            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+            {/* Centered headline */}
+            <div className="flex flex-col items-center text-center mb-9">
               <div className="term-label mb-4" style={{ color: "var(--df-accent,#f5a623)" }}>
                 ◢ options risk terminal
               </div>
               <h1
-                className="font-mono text-5xl sm:text-6xl font-bold mb-4"
-                style={{ color: "var(--df-text,#e9ebee)", letterSpacing: "-2px", lineHeight: 1 }}
+                className="font-mono text-6xl sm:text-7xl font-bold mb-4"
+                style={{ color: "var(--df-text,#e9ebee)", letterSpacing: "-2.5px", lineHeight: 1 }}
               >
                 DELTA<span style={{ color: "var(--df-accent, #f5a623)" }}>FORGE</span>
               </h1>
-
-              <p className="mb-7 text-base tracking-wide max-w-md leading-relaxed" style={{ color: "var(--df-text-dim, #9aa1ab)" }}>
+              <p className="text-base tracking-wide max-w-md mx-auto leading-relaxed" style={{ color: "var(--df-text-dim, #9aa1ab)" }}>
                 Options risk &amp; delta-neutral hedging, computed by a real Wolfram kernel.
                 <br />
                 <span className="text-sm" style={{ color: "var(--df-text-muted,#616773)" }}>Symbolic math doesn&apos;t hallucinate. </span>
                 <span className="text-sm" style={{ color: "var(--df-accent, #f5a623)" }}>It computes.</span>
               </p>
+            </div>
 
-              {/* Selector card */}
+            {/* Balanced two-up: action card | streaming terminal (equal height) */}
+            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+              {/* Action card */}
               <div
-                className="w-full max-w-xl px-6 py-6 rounded-2xl flex flex-col gap-4"
-                style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", boxShadow: "0 24px 60px rgba(0,0,0,0.30)" }}
+                className="px-6 py-6 rounded-2xl flex flex-col justify-center gap-4"
+                style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", boxShadow: "0 20px 50px rgba(0,0,0,0.28)" }}
               >
                 <div className="w-full">
                   <div className="term-label mb-2.5">Choose an underlying</div>
@@ -131,10 +133,8 @@ export default function Home() {
                   <QuickPicks onPick={(s) => handleAnalyze(s, 7)} />
                 </div>
               </div>
-            </div>
 
-            {/* RIGHT — streaming terminal (symmetric to the action card) */}
-            <div className="w-full">
+              {/* Streaming terminal — stretches to match the card height */}
               <DeltaTerminal />
             </div>
 

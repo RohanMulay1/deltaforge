@@ -1,0 +1,22 @@
+{
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": ["src/app/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+      "excludedFiles": ["**/*.stories.tsx", "**/*.test.tsx", "**/*.test.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/__fixtures__/*", "@/__fixtures__/*"],
+                "message": "Fixtures are test/story-only. Do not import __fixtures__ from app or components — there must be no runtime mock path (ARCHITECTURE.md §10.1)."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

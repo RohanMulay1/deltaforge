@@ -1,0 +1,58 @@
+# DeltaForge backend — Fly.io deploy (ARCHITECTURE.md §11.1).
+#
+# Same multi-stage Dockerfile as local compose. Secrets (DATABASE_URL,
+# GROQ_API_KEY) come from the Fly secret store — NEVER committed here:
+#   fly secrets set DATABASE_URL=... GROQ_API_KEY=...
+#
+# Migrations run as a one-shot RELEASE command before the new version goes live
+# (§9.4 / §11.1) — not in the app process.
+#
+# Wolfram note (§5.2/§11.1): no local Wolfram Engine kernel runs inside Fly, so
+# the deployed backend serves the LABELED `numeric_fallback`. That is honest and
+# acceptable; the `wolfram` engine is only emitted where a real local kernel is
+# present.
+
+app = "deltaforge-backend"
+primary_region = "sin"  # ap-southeast — co-located with the Supabase project.
+
+[build]
+  dockerfile = "Dockerfile"
+
+# One-shot release step: bring the DB to head before the new release serves.
+[deploy]
+  release_command = "alembic upgrade head"
+  strategy = "rolling"
+
+[env]
+  PORT = "8000"
+  LOG_LEVEL = "INFO"
+  MARKET_DATA_PROVIDER = "yfinance"
+  # CORS allowlist (override per-environment; NEVER "*"). Set the real frontend
+  # origin via `fly secrets`/`[env]` at deploy time.
+  CORS_ALLOW_ORIGINS = "https://deltaforge.vercel.app"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 80
+    hard_limit = 100
+
+# Liveness/readiness probe against the §3 /health endpoint.
+[[http_service.checks]]
+  interval = "30s"
+  timeout = "5s"
+  grace_period = "20s"
+  method = "GET"
+  path = "/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
+  cpus = 1

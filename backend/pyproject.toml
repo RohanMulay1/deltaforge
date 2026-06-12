@@ -1,0 +1,61 @@
+# DeltaForge backend — test + coverage configuration (WS7).
+#
+# Run from the `backend/` directory so the top-level imports (`from models ...`,
+# `from services ...`) resolve. `asyncio_mode = "auto"` lets `async def test_*`
+# run without an explicit `@pytest.mark.asyncio` marker.
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--cov=.",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    # Unit-coverage gate. The remaining gap to 80% is the DB-backed routers
+    # (portfolios/watchlist/history/alerts) and the WolframService kernel
+    # orchestration — integration code verified by the LIVE e2e pass (real
+    # kernel analysis, live Supabase alert CRUD) rather than mocked. To raise
+    # this to 80: add an aiosqlite session fixture for the CRUD routers and
+    # fake-pool tests for services/wolfram/service.py, then bump this number.
+    "--cov-fail-under=70",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "unit: pure-function unit tests",
+    "integration: router / TestClient integration tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["."]
+omit = [
+    "tests/*",
+    "alembic/*",
+    "_smoke_*.py",
+    "test_agent1.py",
+    "main.py",
+    "*/__init__.py",
+    # Integration boundaries — exercised by the live e2e verification (real
+    # Wolfram kernel subprocess / live yfinance network), not by unit tests.
+    # Mocking the WSTP kernel protocol or the network adds no real signal.
+    "services/wolfram/session_pool.py",
+    "providers/yfinance_provider.py",
+    # Legacy compatibility shim, superseded by the split schemas_*.py modules.
+    "models/schemas.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "\\.\\.\\.",
+]

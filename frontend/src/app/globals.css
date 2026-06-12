@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 16% 4%;
+    --foreground: 210 12% 92%;
+    --card: 220 14% 7%;
+    --card-foreground: 210 12% 92%;
+    --muted: 220 12% 10%;
+    --muted-foreground: 215 8% 55%;
+    --accent: 38 92% 56%;
+    --accent-foreground: 220 30% 6%;
+    --border: 0 0% 100% / 0.08;
+    --input: 220 12% 12%;
+    --ring: 38 92% 56%;
+    --radius: 0.625rem;
+
+    /* ── DeltaForge — quant-terminal palette (amber/gold on near-black) ──────── */
+    --df-bg: #08090c;
+    --df-panel: #0e1014;
+    --df-panel-2: #14171d;
+    --df-accent: #f5a623;          /* signature amber */
+    --df-accent-strong: #e08c0c;
+    --df-accent-soft: rgba(245, 166, 35, 0.12);
+    --df-cyan: #38cfe0;            /* secondary data accent */
+    --df-text: #e9ebee;
+    --df-text-dim: #9aa1ab;
+    --df-text-muted: #616773;
+    --df-up: #16c784;
+    --df-down: #ea3943;
+    --df-warn: #f5a623;
+    --df-border: rgba(255, 255, 255, 0.06);
+    --df-border-strong: rgba(255, 255, 255, 0.11);
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--df-bg);
+    color: var(--df-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(245,166,35,0.4); }
+}
+
+/* ─── Terminal background: faint grid + a single dim amber wash ───────────── */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--df-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.site-bg::before {
+  content: "";
+  position: absolute;
+  width: 1100px;
+  height: 1100px;
+  border-radius: 9999px;
+  filter: blur(160px);
+  opacity: 0.10;
+  background: radial-gradient(circle, var(--df-accent) 0%, transparent 70%);
+  top: -380px;
+  right: -260px;
+}
+.site-bg-orb3 { display: none; }
+
+/* Subtle grain for depth */
+.site-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ─── Terminal panel (sharper, flatter than glass) ───────────────────────── */
+.cb-card {
+  background: var(--df-panel);
+  border: 1px solid var(--df-border);
+  border-radius: 10px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  position: relative;
+  overflow: hidden;
+}
+.cb-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  pointer-events: none;
+}
+.cb-card:hover {
+  border-color: rgba(245, 166, 35, 0.28);
+  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.08), 0 10px 36px rgba(0, 0, 0, 0.5);
+}
+.cb-hud-card:hover {
+  border-color: rgba(245, 166, 35, 0.35);
+  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.12), 0 10px 36px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes number-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.number-in { animation: number-in 0.45s ease forwards; }
+
+@keyframes df-shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── Buttons: amber primary, dark ink ───────────────────────────────────── */
+.cb-btn-primary {
+  background: var(--df-accent);
+  color: #0a0a0a;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  height: 40px;
+  transition: background 140ms ease, box-shadow 140ms ease, transform 100ms ease;
+  border: none;
+  cursor: pointer;
+}
+.cb-btn-primary:hover:not(:disabled) {
+  background: #ffba3d;
+  box-shadow: 0 4px 22px rgba(245, 166, 35, 0.4);
+  transform: translateY(-1px);
+}
+.cb-btn-primary:active:not(:disabled) { transform: translateY(0); }
+.cb-btn-primary:disabled { background: rgba(245, 166, 35, 0.3); color: rgba(10,10,10,0.6); cursor: not-allowed; }
+
+.cb-btn-secondary {
+  background: rgba(255,255,255,0.05);
+  color: var(--df-text);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 14px;
+  height: 36px;
+  border: 1px solid var(--df-border-strong);
+  transition: background 150ms ease, border-color 150ms ease;
+  cursor: pointer;
+}
+.cb-btn-secondary:hover { background: rgba(255,255,255,0.09); border-color: rgba(245,166,35,0.3); }
+
+/* ─── OFI heatmap (green/red data band) ──────────────────────────────────── */
+.heatmap-up-1   { background: rgba(22, 199, 132, 0.08); }
+.heatmap-up-2   { background: rgba(22, 199, 132, 0.17); }
+.heatmap-up-3   { background: rgba(22, 199, 132, 0.30); }
+.heatmap-down-1 { background: rgba(234, 57, 67, 0.08); }
+.heatmap-down-2 { background: rgba(234, 57, 67, 0.17); }
+.heatmap-down-3 { background: rgba(234, 57, 67, 0.30); }
+
+/* ─── Utility ────────────────────────────────────────────────────────────── */
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.gradient-value {
+  background: linear-gradient(135deg, #ffffff 35%, rgba(255,255,255,0.65));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section label — terminal style (uppercase, tracked, amber tick) */
+.term-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--df-text-muted);
+}

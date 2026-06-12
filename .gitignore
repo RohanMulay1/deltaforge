@@ -1,0 +1,47 @@
+# ── Secrets — NEVER commit (real keys live here) ─────────────────────────────
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local
+# (.env.example / *.env.local.example ARE committed as templates)
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+.venv_smoke/
+*.egg-info/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ── Node / Next.js ───────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+
+# ── OS / editor ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ── Dev scratch / screenshots (not source) ───────────────────────────────────
+df_*.png
+df2_*.png
+df3_*.png
+new_*.png
+cb_*.png
+screenshot_*.png
+frontend/screenshot*.png
+analyze_spy.json
+_*.json
+backend/_smoke_*.py
+backend/_e2e_*.py

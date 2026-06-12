@@ -1,0 +1,38 @@
+# DeltaForge backend — pinned dependency set (ARCHITECTURE.md §11).
+# Local Wolfram Engine kernel is driven by `wolframclient` (pure-Python); the
+# kernel binary itself is a host install, NOT a pip dependency and NOT a secret.
+# There are NO Wolfram Cloud / Secured Authentication Key deps.
+
+# ── Web framework ──────────────────────────────────────────────────────────────
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+
+# ── Config / validation ────────────────────────────────────────────────────────
+pydantic>=2.6,<3.0
+pydantic-settings>=2.2,<3.0
+python-dotenv>=1.0,<2.0
+
+# ── LLM / pipeline (Groq via LangGraph) ────────────────────────────────────────
+langgraph>=0.2,<1.0
+langchain-core>=0.3,<1.0
+langchain-groq>=0.2,<1.0
+
+# ── Market data ────────────────────────────────────────────────────────────────
+yfinance>=0.2.41,<1.0
+
+# ── Symbolic engine + numeric fallback ─────────────────────────────────────────
+wolframclient>=1.1.0,<2.0
+numpy>=1.26,<3.0
+scipy>=1.12,<2.0
+mpmath>=1.3,<2.0
+cachetools>=5.3,<6.0   # WolframService eval cache (services/wolfram/cache.py)
+
+# ── Persistence ────────────────────────────────────────────────────────────────
+sqlalchemy[asyncio]>=2.0,<3.0
+asyncpg>=0.29,<1.0
+psycopg[binary]>=3.1,<4.0
+alembic>=1.13,<2.0
+
+# ── Rate limiting + scheduling ─────────────────────────────────────────────────
+slowapi>=0.1.9,<1.0
+apscheduler>=3.10,<4.0

@@ -1,0 +1,19 @@
+{
+  "symbol": "SPY",
+  "expiry": "2027-01-15",
+  "spot_price": 530.0,
+  "calls": [
+    {"strike": 510.0, "expiry": "2027-01-15", "option_type": "call", "bid": 24.10, "ask": 24.40, "last_price": 24.25, "volume": 1200, "open_interest": 4500, "implied_volatility": 0.205},
+    {"strike": 520.0, "expiry": "2027-01-15", "option_type": "call", "bid": 16.80, "ask": 17.10, "last_price": 16.95, "volume": 2100, "open_interest": 8200, "implied_volatility": 0.192},
+    {"strike": 530.0, "expiry": "2027-01-15", "option_type": "call", "bid": 10.40, "ask": 10.70, "last_price": 10.55, "volume": 5400, "open_interest": 15300, "implied_volatility": 0.181},
+    {"strike": 540.0, "expiry": "2027-01-15", "option_type": "call", "bid": 5.90, "ask": 6.15, "last_price": 6.02, "volume": 3300, "open_interest": 9100, "implied_volatility": 0.186},
+    {"strike": 550.0, "expiry": "2027-01-15", "option_type": "call", "bid": 3.05, "ask": 3.25, "last_price": 3.15, "volume": 1800, "open_interest": 6400, "implied_volatility": 0.199}
+  ],
+  "puts": [
+    {"strike": 510.0, "expiry": "2027-01-15", "option_type": "put", "bid": 4.20, "ask": 4.45, "last_price": 4.32, "volume": 900, "open_interest": 5100, "implied_volatility": 0.221},
+    {"strike": 520.0, "expiry": "2027-01-15", "option_type": "put", "bid": 6.70, "ask": 6.95, "last_price": 6.82, "volume": 1500, "open_interest": 7300, "implied_volatility": 0.208},
+    {"strike": 530.0, "expiry": "2027-01-15", "option_type": "put", "bid": 10.10, "ask": 10.40, "last_price": 10.25, "volume": 4800, "open_interest": 14100, "implied_volatility": 0.181},
+    {"strike": 540.0, "expiry": "2027-01-15", "option_type": "put", "bid": 15.30, "ask": 15.65, "last_price": 15.48, "volume": 2000, "open_interest": 6900, "implied_volatility": 0.195},
+    {"strike": 550.0, "expiry": "2027-01-15", "option_type": "put", "bid": 22.40, "ask": 22.80, "last_price": 22.60, "volume": 700, "open_interest": 3200, "implied_volatility": 0.214}
+  ]
+}

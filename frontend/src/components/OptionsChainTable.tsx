@@ -47,7 +47,7 @@ function MetricBar({ value, max, fill }: { value: number; max: number; fill: str
       <span className="font-mono text-xs tabular-nums shrink-0" style={{ color: "var(--df-text-dim, #a8acb3)", width: 34 }}>
         {compact}
       </span>
-      <div className="shrink-0 rounded-full overflow-hidden" style={{ width: 40, height: 4, background: "rgba(255,255,255,0.07)" }}>
+      <div className="shrink-0 rounded-full overflow-hidden" style={{ width: 40, height: 4, background: "var(--df-border)" }}>
         <div className="h-full rounded-full" style={{ width: `${ratio * 40}px`, background: fill }} />
       </div>
     </div>
@@ -121,7 +121,7 @@ function ChainCells({ row, maxVol, maxOI, isPin }: { row: ChainRow; maxVol: numb
       </div>
 
       <div className="flex items-center">
-        <MetricBar value={row.volume} max={maxVol} fill="rgba(255,255,255,0.20)" />
+        <MetricBar value={row.volume} max={maxVol} fill="var(--df-text-dim)" />
       </div>
 
       <div className="flex items-center">
@@ -161,7 +161,7 @@ export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsCh
 
   return (
     <div className="cb-card overflow-hidden">
-      <div className="flex items-center gap-3 px-5 py-3.5" style={{ borderBottom: "1px solid var(--df-border, rgba(255,255,255,0.06))" }}>
+      <div className="flex items-center gap-3 px-5 py-3.5" style={{ borderBottom: "1px solid var(--df-border, var(--df-border))" }}>
         <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--df-text-dim, #a8acb3)", letterSpacing: "0.12em" }}>
           Options Chain
         </span>
@@ -196,7 +196,7 @@ export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsCh
           gridTemplateColumns: GRID_TEMPLATE,
           color: "var(--df-text-muted, #7c828a)",
           letterSpacing: "0.1em",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          borderBottom: "1px solid var(--df-surface)",
         }}
       >
         {COLUMNS.map((h) => (
@@ -222,7 +222,7 @@ export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsCh
                   height: ROW_HEIGHT,
                   transform: `translateY(${vItem.start}px)`,
                   gridTemplateColumns: GRID_TEMPLATE,
-                  borderBottom: "1px solid rgba(255,255,255,0.03)",
+                  borderBottom: "1px solid var(--df-border)",
                   borderTop: isAtmAnchor && vItem.index === atmIndex ? "1px solid rgba(245,166,35,0.35)" : undefined,
                   background: isAtmAnchor ? "rgba(245,166,35,0.06)" : "transparent",
                 }}

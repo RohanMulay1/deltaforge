@@ -58,7 +58,7 @@ export default function AnalyzeForm({
           )}
           <div
             className="flex flex-row items-center gap-0.5 p-1"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12 }}
+            style={{ background: "var(--df-surface)", border: "1px solid var(--df-border-strong)", borderRadius: 12 }}
           >
             {DTE_OPTIONS.map((opt) => {
               const on = dteMax === opt.value

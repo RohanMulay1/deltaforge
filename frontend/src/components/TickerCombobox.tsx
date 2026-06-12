@@ -104,8 +104,8 @@ export default function TickerCombobox({ value, onChange, onCommit, disabled }: 
       <div
         className="flex items-center gap-2.5 transition-all"
         style={{
-          background: "rgba(255,255,255,0.05)",
-          border: `1px solid ${open ? "rgba(245,166,35,0.55)" : "var(--df-border-strong, rgba(255,255,255,0.10))"}`,
+          background: "var(--df-surface)",
+          border: `1px solid ${open ? "rgba(245,166,35,0.55)" : "var(--df-border-strong, var(--df-border-strong))"}`,
           borderRadius: 12,
           height: 44,
           padding: "0 12px 0 14px",
@@ -141,8 +141,8 @@ export default function TickerCombobox({ value, onChange, onCommit, disabled }: 
         <div
           className="absolute left-0 right-0 z-50 mt-2 overflow-hidden"
           style={{
-            background: "rgba(14,16,20,0.96)",
-            border: "1px solid rgba(255,255,255,0.10)",
+            background: "var(--df-panel)",
+            border: "1px solid var(--df-border-strong)",
             borderRadius: 14,
             backdropFilter: "blur(20px)",
             boxShadow: "0 18px 50px rgba(0,0,0,0.55)",
@@ -196,7 +196,7 @@ function Row({ t, activeRow, onPick, onHover }: {
       onMouseEnter={onHover}
       onClick={onPick}
       className="w-full flex items-center gap-3 px-3.5 py-2 text-left transition-colors"
-      style={{ background: activeRow ? "rgba(255,255,255,0.06)" : "transparent" }}
+      style={{ background: activeRow ? "var(--df-border)" : "transparent" }}
     >
       <span className="font-mono text-sm font-bold w-14 flex-shrink-0" style={{ color: "var(--df-text,#fff)", letterSpacing: "0.04em" }}>
         {t.symbol}

@@ -25,7 +25,7 @@ export function EmptyState({
       className="flex flex-col items-center justify-center gap-2 rounded-2xl text-center px-6"
       style={{
         minHeight,
-        border: "1px dashed var(--df-border, rgba(255,255,255,0.10))",
+        border: "1px dashed var(--df-border, var(--df-border-strong))",
         color: "var(--df-text-muted, #7c828a)",
       }}
     >

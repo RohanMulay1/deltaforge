@@ -19,6 +19,7 @@ import { PortfolioRail } from "@/components/portfolio/PortfolioRail"
 import { ScenarioPanel } from "@/components/scenario/ScenarioPanel"
 import { ExplainProvider } from "@/components/explain/ExplainContext"
 import { ExplainDrawer } from "@/components/explain/ExplainDrawer"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import { useAnalysisStream } from "@/hooks/useAnalysisStream"
 import { usePanelStatus } from "@/hooks/usePanelStatus"
 import type { HedgeRecommendation, PortfolioGreeks } from "@/types"
@@ -54,7 +55,7 @@ function QuickPicks({ onPick }: { onPick: (s: string) => void }) {
           type="button"
           onClick={() => onPick(s)}
           className="font-mono text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full transition-all hover:scale-[1.04]"
-          style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "var(--df-text-dim,#a8acb3)" }}
+          style={{ background: "var(--df-surface)", border: "1px solid var(--df-border-strong)", color: "var(--df-text-dim,#a8acb3)" }}
         >
           {s}
         </button>
@@ -87,8 +88,18 @@ export default function Home() {
   // ── Landing view (no analysis yet) ──────────────────────────────────────
   if (!hasStarted) {
     return (
-      <main className="relative min-h-screen overflow-hidden" style={{ background: "var(--df-bg, #0a0b0d)" }}>
+      <main className="relative min-h-screen overflow-hidden" style={{ background: "var(--df-bg, var(--df-bg))" }}>
         <SiteBg />
+        {/* Minimal top bar — wordmark + theme toggle (the landing has no Header) */}
+        <div
+          className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5"
+          style={{ height: 52, borderBottom: "1px solid var(--df-border)" }}
+        >
+          <span className="font-mono text-[14px] font-bold tracking-tight" style={{ color: "var(--df-text)" }}>
+            DELTA<span style={{ color: "var(--df-accent)" }}>FORGE</span>
+          </span>
+          <ThemeToggle />
+        </div>
         <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-16">
           <div className="w-full max-w-2xl flex flex-col items-center">
             <div className="term-label mb-4" style={{ color: "var(--df-accent,#f5a623)" }}>
@@ -111,7 +122,7 @@ export default function Home() {
             {/* Selector card */}
             <div
               className="w-full max-w-xl px-7 py-7 rounded-2xl flex flex-col items-center gap-5"
-              style={{ background: "rgba(16,18,22,0.82)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(20px)", boxShadow: "0 24px 60px rgba(0,0,0,0.45)" }}
+              style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", backdropFilter: "blur(20px)", boxShadow: "0 24px 60px rgba(0,0,0,0.45)" }}
             >
               <div className="w-full">
                 <div className="text-[10px] font-bold uppercase tracking-widest mb-2.5" style={{ color: "var(--df-text-muted,#7c828a)" }}>
@@ -133,7 +144,7 @@ export default function Home() {
                 <div
                   key={p.k}
                   className="px-4 py-3.5 rounded-xl"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
                 >
                   <div className="flex items-center gap-1.5 mb-1.5">
                     <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#2bd4a0" }} />
@@ -169,7 +180,7 @@ export default function Home() {
 
   return (
     <ExplainProvider>
-    <div className="min-h-screen relative" style={{ background: "var(--df-bg, #0a0b0d)" }}>
+    <div className="min-h-screen relative" style={{ background: "var(--df-bg, var(--df-bg))" }}>
       <SiteBg />
 
       <div className="relative z-10">
@@ -190,7 +201,7 @@ export default function Home() {
           <div className="flex flex-col gap-4 min-w-0">
             <div
               className="rounded-[10px] px-5 py-3.5 flex items-center justify-between gap-4 flex-wrap"
-              style={{ background: "var(--df-panel, #0e1014)", border: "1px solid var(--df-border, rgba(255,255,255,0.06))" }}
+              style={{ background: "var(--df-panel, var(--df-panel))", border: "1px solid var(--df-border, var(--df-border))" }}
             >
               <AnalyzeForm
                 onAnalyze={handleAnalyze}
@@ -210,8 +221,8 @@ export default function Home() {
                     onClick={() => handleAnalyze(s, stream.dteMax ?? 7)}
                     className="font-mono text-[11px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-md transition-all"
                     style={{
-                      background: symbol === s ? "var(--df-accent-soft, rgba(245,166,35,0.12))" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${symbol === s ? "rgba(245,166,35,0.45)" : "rgba(255,255,255,0.08)"}`,
+                      background: symbol === s ? "var(--df-accent-soft, rgba(245,166,35,0.12))" : "var(--df-surface)",
+                      border: `1px solid ${symbol === s ? "rgba(245,166,35,0.45)" : "var(--df-border-strong)"}`,
                       color: symbol === s ? "var(--df-accent,#f5a623)" : "var(--df-text-dim,#9aa1ab)",
                     }}
                   >
@@ -244,7 +255,7 @@ export default function Home() {
               )}
             </PanelState>
 
-            <div style={{ height: 1, background: "rgba(255,255,255,0.05)" }} />
+            <div style={{ height: 1, background: "var(--df-surface)" }} />
 
             {/* Two balanced stacks: [chain + scenario] | [iv + hedge + summary].
                 Keeping both columns as multi-panel flex stacks tessellates the
@@ -300,7 +311,7 @@ export default function Home() {
                   {partial?.risk_summary && (
                     <div
                       className="rounded-[10px] px-5 py-4 flex-1"
-                      style={{ background: "linear-gradient(160deg, rgba(245,166,35,0.05), var(--df-panel,#0e1014))", border: "1px solid var(--df-border, rgba(255,255,255,0.06))" }}
+                      style={{ background: "linear-gradient(160deg, rgba(245,166,35,0.05), var(--df-panel,var(--df-panel)))", border: "1px solid var(--df-border, var(--df-border))" }}
                     >
                       <div className="flex items-center gap-2 mb-2.5">
                         <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--df-accent,#f5a623)" }} />
@@ -318,7 +329,7 @@ export default function Home() {
             {/* Footer + disclaimer (§12) */}
             <div
               className="flex items-center justify-between font-mono text-[10px] pt-3 pb-5"
-              style={{ borderTop: "1px solid var(--df-border, rgba(255,255,255,0.06))", color: "var(--df-text-muted, #616773)" }}
+              style={{ borderTop: "1px solid var(--df-border, var(--df-border))", color: "var(--df-text-muted, #616773)" }}
             >
               <span>{DISCLAIMER}</span>
               <span style={{ color: "var(--df-accent, #f5a623)", fontWeight: 700, letterSpacing: "0.05em" }}>DF</span>

@@ -48,7 +48,7 @@ export function CsvPasteImport({ onImport }: CsvPasteImportProps) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-widest py-2 px-2.5 rounded-md transition-colors"
-        style={{ background: "rgba(255,255,255,0.04)", color: MUTED, border: "1px solid rgba(255,255,255,0.08)", letterSpacing: "0.1em" }}
+        style={{ background: "var(--df-surface)", color: MUTED, border: "1px solid var(--df-border-strong)", letterSpacing: "0.1em" }}
         aria-expanded={open}
       >
         <span>Paste CSV</span>
@@ -64,7 +64,7 @@ export function CsvPasteImport({ onImport }: CsvPasteImportProps) {
             placeholder={PLACEHOLDER}
             rows={5}
             className="w-full font-mono text-[10px] leading-relaxed px-2.5 py-2 rounded-md outline-none resize-y"
-            style={{ background: "rgba(0,0,0,0.30)", border: "1px solid rgba(255,255,255,0.10)", color: DIM }}
+            style={{ background: "rgba(0,0,0,0.30)", border: "1px solid var(--df-border-strong)", color: DIM }}
           />
 
           {result && (

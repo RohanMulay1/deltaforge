@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* ── DARK (default) — the retained quant-terminal palette ───────────────── */
+  :root,
+  [data-theme="dark"] {
     --background: 220 16% 4%;
     --foreground: 210 12% 92%;
     --card: 220 14% 7%;
@@ -15,16 +17,15 @@
     --border: 0 0% 100% / 0.08;
     --input: 220 12% 12%;
     --ring: 38 92% 56%;
-    --radius: 0.625rem;
+    --radius: 0.375rem;
 
-    /* ── DeltaForge — quant-terminal palette (amber/gold on near-black) ──────── */
     --df-bg: #08090c;
     --df-panel: #0e1014;
     --df-panel-2: #14171d;
-    --df-accent: #f5a623;          /* signature amber */
+    --df-accent: #f5a623;          /* signature amber — identical in both themes */
     --df-accent-strong: #e08c0c;
     --df-accent-soft: rgba(245, 166, 35, 0.12);
-    --df-cyan: #38cfe0;            /* secondary data accent */
+    --df-cyan: #38cfe0;
     --df-text: #e9ebee;
     --df-text-dim: #9aa1ab;
     --df-text-muted: #616773;
@@ -33,10 +34,57 @@
     --df-warn: #f5a623;
     --df-border: rgba(255, 255, 255, 0.06);
     --df-border-strong: rgba(255, 255, 255, 0.11);
+
+    /* Theme-aware surfaces (replace hardcoded white-alpha so light mode works) */
+    --df-surface: rgba(255, 255, 255, 0.05);
+    --df-surface-hover: rgba(255, 255, 255, 0.09);
+    --df-header-bg: rgba(8, 9, 12, 0.85);
+    --df-grid-line: rgba(255, 255, 255, 0.022);
+    --df-scroll-thumb: rgba(255, 255, 255, 0.12);
+
+    color-scheme: dark;
+  }
+
+  /* ── LIGHT — same accent/up/down, flipped surfaces + text ─────────────────── */
+  [data-theme="light"] {
+    --background: 220 16% 96%;
+    --foreground: 220 24% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 24% 10%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 8% 42%;
+    --border: 220 14% 0% / 0.1;
+    --input: 0 0% 100%;
+
+    --df-bg: #f2f3f6;
+    --df-panel: #ffffff;
+    --df-panel-2: #f6f7f9;
+    --df-text: #14171c;
+    --df-text-dim: #4a515b;
+    --df-text-muted: #7b828c;
+    --df-border: rgba(15, 20, 30, 0.10);
+    --df-border-strong: rgba(15, 20, 30, 0.17);
+
+    --df-surface: rgba(15, 20, 30, 0.04);
+    --df-surface-hover: rgba(15, 20, 30, 0.07);
+    --df-header-bg: rgba(255, 255, 255, 0.88);
+    --df-grid-line: rgba(15, 20, 30, 0.045);
+    --df-scroll-thumb: rgba(15, 20, 30, 0.22);
+
+    color-scheme: light;
   }
 
   * { box-sizing: border-box; }
-  html { color-scheme: dark; }
+
+  /* Global theme transition — ONLY color properties (no layout shift, no lag).
+     Component-specific transition shorthands still override where set. */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+  }
+  /* Suppress the transition on first paint so the page doesn't fade in on load. */
+  html.theme-preload, html.theme-preload * { transition: none !important; }
 
   body {
     font-family: var(--font-sans);
@@ -45,12 +93,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    font-variant-numeric: tabular-nums;
   }
 
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(245,166,35,0.4); }
+  ::-webkit-scrollbar-thumb { background: var(--df-scroll-thumb); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(245, 166, 35, 0.5); }
 }
 
 /* ─── Terminal background: faint grid + a single dim amber wash ───────────── */
@@ -62,8 +111,8 @@
   overflow: hidden;
   background-color: var(--df-bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    linear-gradient(var(--df-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--df-grid-line) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 .site-bg::before {
@@ -80,7 +129,6 @@
 }
 .site-bg-orb3 { display: none; }
 
-/* Subtle grain for depth */
 .site-grain {
   position: fixed;
   inset: 0;
@@ -91,12 +139,11 @@
   background-size: 200px 200px;
 }
 
-/* ─── Terminal panel (sharper, flatter than glass) ───────────────────────── */
+/* ─── Terminal panel (sharp, flat) ───────────────────────────────────────── */
 .cb-card {
   background: var(--df-panel);
   border: 1px solid var(--df-border);
-  border-radius: 10px;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  border-radius: 6px;
   position: relative;
   overflow: hidden;
 }
@@ -105,17 +152,11 @@
   position: absolute;
   left: 0; top: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(90deg, transparent, var(--df-border), transparent);
   pointer-events: none;
 }
-.cb-card:hover {
-  border-color: rgba(245, 166, 35, 0.28);
-  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.08), 0 10px 36px rgba(0, 0, 0, 0.5);
-}
-.cb-hud-card:hover {
-  border-color: rgba(245, 166, 35, 0.35);
-  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.12), 0 10px 36px rgba(0, 0, 0, 0.55);
-}
+.cb-card:hover { border-color: rgba(245, 166, 35, 0.28); }
+.cb-hud-card:hover { border-color: rgba(245, 166, 35, 0.35); }
 
 @keyframes number-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -132,38 +173,33 @@
 .cb-btn-primary {
   background: var(--df-accent);
   color: #0a0a0a;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 10px 20px;
   height: 40px;
-  transition: background 140ms ease, box-shadow 140ms ease, transform 100ms ease;
+  transition: background 140ms ease, transform 100ms ease;
   border: none;
   cursor: pointer;
 }
-.cb-btn-primary:hover:not(:disabled) {
-  background: #ffba3d;
-  box-shadow: 0 4px 22px rgba(245, 166, 35, 0.4);
-  transform: translateY(-1px);
-}
+.cb-btn-primary:hover:not(:disabled) { background: #ffba3d; transform: translateY(-1px); }
 .cb-btn-primary:active:not(:disabled) { transform: translateY(0); }
 .cb-btn-primary:disabled { background: rgba(245, 166, 35, 0.3); color: rgba(10,10,10,0.6); cursor: not-allowed; }
 
 .cb-btn-secondary {
-  background: rgba(255,255,255,0.05);
+  background: var(--df-surface);
   color: var(--df-text);
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 12px;
   padding: 8px 14px;
   height: 36px;
   border: 1px solid var(--df-border-strong);
-  transition: background 150ms ease, border-color 150ms ease;
   cursor: pointer;
 }
-.cb-btn-secondary:hover { background: rgba(255,255,255,0.09); border-color: rgba(245,166,35,0.3); }
+.cb-btn-secondary:hover { background: var(--df-surface-hover); border-color: rgba(245,166,35,0.3); }
 
 /* ─── OFI heatmap (green/red data band) ──────────────────────────────────── */
 .heatmap-up-1   { background: rgba(22, 199, 132, 0.08); }
@@ -179,13 +215,9 @@
   font-variant-numeric: tabular-nums;
 }
 .gradient-value {
-  background: linear-gradient(135deg, #ffffff 35%, rgba(255,255,255,0.65));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--df-text);
 }
 
-/* Section label — terminal style (uppercase, tracked, amber tick) */
 .term-label {
   font-family: var(--font-mono), monospace;
   font-size: 9px;

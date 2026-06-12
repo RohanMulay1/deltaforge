@@ -35,7 +35,7 @@ const DEFAULT_CONTROLS: ScenarioControls = {
 
 function Metric({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="rounded-xl px-3.5 py-2.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+    <div className="rounded-xl px-3.5 py-2.5" style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}>
       <div className="font-mono text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: MUTED }}>
         {label}
       </div>
@@ -62,8 +62,8 @@ export function ScenarioPanel() {
     <div
       className="rounded-2xl px-5 py-4 space-y-4"
       style={{
-        background: "rgba(16,18,22,0.70)",
-        border: "1px solid var(--df-border, rgba(255,255,255,0.07))",
+        background: "var(--df-panel)",
+        border: "1px solid var(--df-border, var(--df-border))",
         backdropFilter: "blur(16px)",
       }}
     >
@@ -98,7 +98,7 @@ export function ScenarioPanel() {
       {!enabled ? (
         <div
           className="rounded-xl px-4 py-8 text-center font-mono text-[11px]"
-          style={{ border: "1px dashed rgba(255,255,255,0.10)", color: MUTED }}
+          style={{ border: "1px dashed var(--df-border-strong)", color: MUTED }}
         >
           Add positions in the rail to revalue a P&L surface across spot / IV / time.
         </div>

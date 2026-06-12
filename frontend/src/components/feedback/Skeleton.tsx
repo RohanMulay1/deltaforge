@@ -18,7 +18,7 @@ interface SkeletonProps {
 
 const SHIMMER_STYLE: CSSProperties = {
   background:
-    "linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 37%, rgba(255,255,255,0.04) 63%)",
+    "linear-gradient(90deg, var(--df-surface) 25%, var(--df-border-strong) 37%, var(--df-surface) 63%)",
   backgroundSize: "400% 100%",
   animation: "df-shimmer 1.4s ease infinite",
 };
@@ -55,7 +55,7 @@ export function ChainSkeleton({ rows = 8 }: { rows?: number }) {
     <div className="cb-card overflow-hidden">
       <div
         className="px-5 py-3.5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderBottom: "1px solid var(--df-border)" }}
       >
         <Skeleton width={120} height={12} radius={4} />
       </div>
@@ -74,7 +74,7 @@ export function CardSkeleton({ height = 220 }: { height?: number }) {
     <div className="cb-card overflow-hidden">
       <div
         className="px-5 py-3.5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderBottom: "1px solid var(--df-border)" }}
       >
         <Skeleton width={160} height={12} radius={4} />
       </div>

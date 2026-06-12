@@ -45,3 +45,4 @@ backend/_smoke_*.py
 backend/_e2e_*.py
 frontend/_shot*.js
 _shot*.js
+frontend/_*.js

@@ -19,7 +19,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
       {/* Header */}
       <div
         className="flex items-center justify-between px-5 py-4"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderBottom: "1px solid var(--df-border)" }}
       >
         <span className="text-[11px] font-bold tracking-widest uppercase text-white" style={{ letterSpacing: "0.1em" }}>
           OPTIMAL DELTA-NEUTRAL HEDGE
@@ -65,12 +65,12 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
         <div className="grid grid-cols-2 gap-2.5">
           {[
             { label: "DELTA RATIO", value: hedge.delta_neutral_ratio.toFixed(4), color: "#f5a623", explain: true },
-            { label: "CONTRACTS",   value: String(hedge.contracts_to_trade),       color: "#ffffff", explain: false },
+            { label: "CONTRACTS",   value: String(hedge.contracts_to_trade),       color: "var(--df-text)", explain: false },
           ].map(({ label, value, color, explain }) => (
             <div
               key={label}
               className="rounded-2xl p-3.5 transition-all"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
             >
               <div className="font-mono text-[9px] font-semibold uppercase tracking-widest mb-2" style={{ color: "#7c828a" }}>
                 {label}
@@ -92,7 +92,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
           {/* Type */}
           <div
             className="rounded-2xl p-3.5"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
           >
             <div className="font-mono text-[9px] font-semibold uppercase tracking-widest mb-2" style={{ color: "#7c828a" }}>
               TYPE
@@ -112,7 +112,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
           {/* Strike */}
           <div
             className="rounded-2xl p-3.5"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
           >
             <div className="font-mono text-[9px] font-semibold uppercase tracking-widest mb-2" style={{ color: "#7c828a" }}>
               STRIKE
@@ -140,8 +140,8 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
               position: "relative",
               height: 8,
               borderRadius: 100,
-              background: "linear-gradient(to right, rgba(207,32,47,0.30), rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.06) 60%, rgba(5,177,105,0.30))",
-              border: "1px solid rgba(255,255,255,0.06)",
+              background: "linear-gradient(to right, rgba(207,32,47,0.30), var(--df-border) 40%, var(--df-border) 60%, rgba(5,177,105,0.30))",
+              border: "1px solid var(--df-border)",
             }}
           >
             <div
@@ -151,7 +151,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
                 bottom: -5,
                 left: `${zeroPercent}%`,
                 width: 2,
-                background: "rgba(255,255,255,0.25)",
+                background: "var(--df-border-strong)",
                 borderRadius: 1,
                 transform: "translateX(-50%)",
               }}
@@ -167,7 +167,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
         {/* Reasoning */}
         <div
           className="font-mono text-xs leading-relaxed pt-3"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "#a8acb3" }}
+          style={{ borderTop: "1px solid var(--df-border)", color: "#a8acb3" }}
         >
           {hedge.reasoning}
         </div>

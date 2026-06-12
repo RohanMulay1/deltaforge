@@ -15,10 +15,10 @@ const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Toolti
   if (!active || !payload?.[0]?.payload) return null;
   const d = payload[0].payload;
   return (
-    <div style={{ background: "rgba(16,18,22,0.95)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 12, padding: "8px 14px", fontFamily: "monospace", fontSize: 11 }}>
-      <div style={{ color: "#a8acb3" }}>STRIKE: <span style={{ color: "#fff" }}>${d.strike}</span></div>
-      <div style={{ color: "#a8acb3" }}>IV: <span style={{ color: d.type === "call" ? "#f5a623" : "#cf202f" }}>{d.iv.toFixed(2)}%</span></div>
-      <div style={{ color: "#a8acb3" }}>OI: <span style={{ color: "#fff" }}>{d.open_interest.toLocaleString()}</span></div>
+    <div style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", borderRadius: 12, padding: "8px 14px", fontFamily: "monospace", fontSize: 11 }}>
+      <div style={{ color: "var(--df-text-dim)" }}>STRIKE: <span style={{ color: "var(--df-text)" }}>${d.strike}</span></div>
+      <div style={{ color: "var(--df-text-dim)" }}>IV: <span style={{ color: d.type === "call" ? "#f5a623" : "#cf202f" }}>{d.iv.toFixed(2)}%</span></div>
+      <div style={{ color: "var(--df-text-dim)" }}>OI: <span style={{ color: "var(--df-text)" }}>{d.open_interest.toLocaleString()}</span></div>
     </div>
   );
 };
@@ -40,7 +40,7 @@ export default function IVSurfacePlot({ options }: IVSurfacePlotProps) {
     <div className="cb-card overflow-hidden cursor-default">
       <div
         className="flex items-center justify-between px-5 py-3.5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderBottom: "1px solid var(--df-border)" }}
       >
         <span className="text-[11px] font-bold uppercase tracking-widest text-white" style={{ letterSpacing: "0.1em" }}>
           IV Surface  —  Wolfram Calibration
@@ -59,17 +59,17 @@ export default function IVSurfacePlot({ options }: IVSurfacePlotProps) {
             <XAxis
               dataKey="strike" type="number" domain={["auto", "auto"]}
               tick={{ fill: "#7c828a", fontFamily: "monospace", fontSize: 10 }}
-              tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.07)" }}
+              tickLine={false} axisLine={{ stroke: "var(--df-border)" }}
               label={{ value: "STRIKE", position: "insideBottom", offset: -12, fill: "#7c828a", fontFamily: "monospace", fontSize: 9 }}
             />
             <YAxis
               dataKey="iv" type="number" domain={[0, 30]}
               tick={{ fill: "#7c828a", fontFamily: "monospace", fontSize: 10 }}
-              tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.07)" }}
+              tickLine={false} axisLine={{ stroke: "var(--df-border)" }}
               tickFormatter={(v) => `${v}%`}
             />
             <ZAxis dataKey="size" range={[40, 400]} />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(255,255,255,0.08)" }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "var(--df-border-strong)" }} />
             <Scatter data={calls} fill="#f5a623" fillOpacity={0.80} />
             <Scatter data={puts} fill="#cf202f" fillOpacity={0.70} />
           </ScatterChart>

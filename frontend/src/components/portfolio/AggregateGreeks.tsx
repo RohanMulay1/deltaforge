@@ -35,7 +35,7 @@ function MiniGreek({ label, value }: { label: string; value: number }) {
   return (
     <div
       className="rounded-xl px-2.5 py-2"
-      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+      style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
     >
       <div className="font-mono text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: MUTED }}>
         {label}

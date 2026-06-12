@@ -27,7 +27,7 @@ function instrumentStyle(instrument: string): React.CSSProperties {
   if (instrument === "put") {
     return { background: "rgba(207,32,47,0.10)", color: DOWN, border: "1px solid rgba(207,32,47,0.25)" };
   }
-  return { background: "rgba(255,255,255,0.06)", color: DIM, border: "1px solid rgba(255,255,255,0.10)" };
+  return { background: "var(--df-border)", color: DIM, border: "1px solid var(--df-border-strong)" };
 }
 
 export function PositionRow({ position, onRemove }: PositionRowProps) {
@@ -41,8 +41,8 @@ export function PositionRow({ position, onRemove }: PositionRowProps) {
       className="grid items-center gap-2 px-2.5 py-2 rounded-lg group"
       style={{
         gridTemplateColumns: "auto 1fr auto auto",
-        background: "rgba(255,255,255,0.025)",
-        border: "1px solid rgba(255,255,255,0.05)",
+        background: "var(--df-surface)",
+        border: "1px solid var(--df-surface)",
       }}
     >
       {/* Instrument + symbol */}
@@ -90,7 +90,7 @@ export function PositionRow({ position, onRemove }: PositionRowProps) {
         onClick={() => onRemove(position.id)}
         aria-label={`Remove ${position.symbol} position`}
         className="w-5 h-5 flex items-center justify-center rounded-md opacity-50 group-hover:opacity-100 transition-opacity"
-        style={{ background: "rgba(255,255,255,0.05)", color: MUTED }}
+        style={{ background: "var(--df-surface)", color: MUTED }}
       >
         ×
       </button>

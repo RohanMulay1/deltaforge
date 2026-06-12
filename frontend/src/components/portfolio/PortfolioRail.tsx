@@ -58,8 +58,8 @@ export function PortfolioRail({
       <div
         className="rounded-2xl px-4 py-4 flex flex-col gap-4"
         style={{
-          background: "rgba(16,18,22,0.72)",
-          border: "1px solid var(--df-border, rgba(255,255,255,0.07))",
+          background: "var(--df-panel)",
+          border: "1px solid var(--df-border, var(--df-border))",
           backdropFilter: "blur(16px)",
         }}
       >
@@ -71,11 +71,11 @@ export function PortfolioRail({
           </div>
         )}
 
-        <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+        <div style={{ height: 1, background: "var(--df-border)" }} />
 
         <PositionsList positions={positions} onRemove={remove} />
 
-        <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+        <div style={{ height: 1, background: "var(--df-border)" }} />
 
         <AddPositionTicket onAdd={add} />
 
@@ -83,7 +83,7 @@ export function PortfolioRail({
 
         <div
           className="font-mono text-[9px] leading-relaxed pt-2"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: MUTED }}
+          style={{ borderTop: "1px solid var(--df-surface)", color: MUTED }}
         >
           {DISCLAIMER}
         </div>

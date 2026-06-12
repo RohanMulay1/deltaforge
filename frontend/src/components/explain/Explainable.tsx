@@ -63,7 +63,7 @@ export function Explainable({
         font: "inherit",
         color: "inherit",
         textDecoration: "underline dotted",
-        textDecorationColor: "rgba(255,255,255,0.35)",
+        textDecorationColor: "var(--df-text-dim)",
         textUnderlineOffset: "3px",
       }}
     >

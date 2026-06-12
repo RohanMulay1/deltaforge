@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { SymbolicEngineBadge } from "@/components/status/SymbolicEngineBadge"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 function StatusDot({ color }: { color: string }) {
   return (
@@ -33,10 +34,10 @@ export function Header() {
       className="sticky top-0 z-50 w-full"
       style={{
         height: 52,
-        background: "rgba(8,9,12,0.88)",
+        background: "var(--df-header-bg)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid var(--df-border-strong, rgba(255,255,255,0.11))",
+        borderBottom: "1px solid var(--df-border-strong)",
       }}
     >
       <div className="max-w-[1720px] mx-auto h-full flex items-center px-5 gap-4">
@@ -67,6 +68,8 @@ export function Header() {
             <span className="font-mono text-[10px] font-bold tracking-wide" style={{ color: "var(--df-up, #16c784)" }}>LIVE</span>
           </div>
           <SymbolicEngineBadge />
+          <div style={{ width: 1, height: 18, background: "var(--df-border-strong)" }} />
+          <ThemeToggle />
         </div>
       </div>
     </header>

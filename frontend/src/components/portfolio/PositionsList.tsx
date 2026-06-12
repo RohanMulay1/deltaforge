@@ -36,7 +36,7 @@ export function PositionsList({ positions, onRemove }: PositionsListProps) {
     return (
       <div
         className="rounded-xl px-3 py-6 text-center font-mono text-[10px]"
-        style={{ border: "1px dashed rgba(255,255,255,0.10)", color: MUTED }}
+        style={{ border: "1px dashed var(--df-border-strong)", color: MUTED }}
       >
         No positions yet — add one or paste a CSV below.
       </div>

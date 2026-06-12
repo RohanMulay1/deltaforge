@@ -44,9 +44,9 @@ function CopyButton({ value, label }: { value: string; label: string }) {
       onClick={onCopy}
       className="font-mono text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-md transition-colors"
       style={{
-        background: copied ? "rgba(5,177,105,0.15)" : "rgba(255,255,255,0.06)",
+        background: copied ? "rgba(5,177,105,0.15)" : "var(--df-border)",
         color: copied ? GREEN : "var(--df-text-dim, #a8acb3)",
-        border: "1px solid rgba(255,255,255,0.10)",
+        border: "1px solid var(--df-border-strong)",
       }}
     >
       {copied ? "COPIED" : label}
@@ -112,7 +112,7 @@ function InputsTable({ inputs }: { inputs: WolframComputation["inputs"] }) {
         <div
           key={key}
           className="flex items-center justify-between rounded-lg px-3 py-2"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
         >
           <span className="font-mono text-[11px]" style={{ color: "var(--df-accent, #f5a623)" }}>
             {key}
@@ -196,7 +196,7 @@ export function ExplainDrawer() {
           bottom: 0,
           width: "min(440px, 92vw)",
           background: PANEL_BG,
-          borderLeft: "1px solid var(--df-border-strong, rgba(255,255,255,0.10))",
+          borderLeft: "1px solid var(--df-border-strong, var(--df-border-strong))",
           backdropFilter: "blur(20px)",
           boxShadow: "-24px 0 60px rgba(0,0,0,0.45)",
         }}
@@ -204,7 +204,7 @@ export function ExplainDrawer() {
         {/* Header */}
         <div
           className="flex items-start justify-between px-5 py-4"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ borderBottom: "1px solid var(--df-border)" }}
         >
           <div className="flex flex-col gap-1 min-w-0">
             <span
@@ -225,7 +225,7 @@ export function ExplainDrawer() {
             onClick={close}
             aria-label="Close"
             className="shrink-0 ml-3 w-7 h-7 flex items-center justify-center rounded-lg text-white"
-            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
+            style={{ background: "var(--df-border)", border: "1px solid var(--df-border-strong)" }}
           >
             ×
           </button>
@@ -263,11 +263,11 @@ export function ExplainDrawer() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl px-3.5 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="rounded-xl px-3.5 py-3" style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}>
               <SectionLabel>Numeric</SectionLabel>
               <div className="font-mono text-sm font-semibold tabular-nums text-white">{numeric}</div>
             </div>
-            <div className="rounded-xl px-3.5 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="rounded-xl px-3.5 py-3" style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}>
               <SectionLabel>Kernel Time</SectionLabel>
               <div className="font-mono text-sm font-semibold tabular-nums" style={{ color: "var(--df-text-dim, #a8acb3)" }}>
                 {c.duration_ms != null ? `${Math.round(c.duration_ms)} ms` : "—"}

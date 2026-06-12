@@ -27,9 +27,9 @@ const DOWN = "var(--df-down, #cf202f)";
 const MUTED = "var(--df-text-muted, #7c828a)";
 
 const fieldStyle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.10)",
-  color: "#fff",
+  background: "var(--df-surface)",
+  border: "1px solid var(--df-border-strong)",
+  color: "var(--df-text)",
 };
 
 const ticketSchema = z
@@ -157,9 +157,9 @@ export function AddPositionTicket({ onAdd }: AddPositionTicketProps) {
               onClick={() => setInstrument(opt)}
               className="font-mono text-[10px] font-bold uppercase py-1.5 rounded-md transition-colors"
               style={{
-                background: active ? "rgba(245,166,35,0.16)" : "rgba(255,255,255,0.04)",
+                background: active ? "rgba(245,166,35,0.16)" : "var(--df-surface)",
                 color: active ? ACCENT : MUTED,
-                border: `1px solid ${active ? "rgba(245,166,35,0.30)" : "rgba(255,255,255,0.08)"}`,
+                border: `1px solid ${active ? "rgba(245,166,35,0.30)" : "var(--df-border-strong)"}`,
               }}
             >
               {opt}
@@ -193,9 +193,9 @@ export function AddPositionTicket({ onAdd }: AddPositionTicketProps) {
             aria-pressed={isShort}
             className="font-mono text-[9px] font-bold uppercase px-2 rounded-md transition-colors"
             style={{
-              background: isShort ? "rgba(207,32,47,0.14)" : "rgba(255,255,255,0.04)",
+              background: isShort ? "rgba(207,32,47,0.14)" : "var(--df-surface)",
               color: isShort ? DOWN : MUTED,
-              border: `1px solid ${isShort ? "rgba(207,32,47,0.30)" : "rgba(255,255,255,0.08)"}`,
+              border: `1px solid ${isShort ? "rgba(207,32,47,0.30)" : "var(--df-border-strong)"}`,
             }}
           >
             {isShort ? "SHORT" : "LONG"}

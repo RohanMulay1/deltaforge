@@ -35,7 +35,7 @@ const MUTED = "var(--df-text-muted, #7c828a)";
 const DIM = "var(--df-text-dim, #a8acb3)";
 
 function cellColor(pnl: number, maxAbs: number): string {
-  if (maxAbs <= 0) return "rgba(255,255,255,0.04)";
+  if (maxAbs <= 0) return "var(--df-surface)";
   const intensity = Math.min(Math.abs(pnl) / maxAbs, 1);
   const alpha = 0.08 + intensity * 0.62;
   return pnl >= 0
@@ -143,17 +143,17 @@ export function PnLSurfaceChart({ surface }: PnLSurfaceChartProps) {
                 dataKey="spot"
                 tickFormatter={(v: number) => `${v > 0 ? "+" : ""}${v.toFixed(0)}%`}
                 tick={{ fill: "#7c828a", fontSize: 10, fontFamily: "var(--font-mono, monospace)" }}
-                stroke="rgba(255,255,255,0.10)"
+                stroke="var(--df-border-strong)"
               />
               <YAxis
                 tick={{ fill: "#7c828a", fontSize: 10, fontFamily: "var(--font-mono, monospace)" }}
-                stroke="rgba(255,255,255,0.10)"
+                stroke="var(--df-border-strong)"
                 width={44}
               />
               <Tooltip
                 contentStyle={{
                   background: "rgba(13,15,19,0.96)",
-                  border: "1px solid rgba(255,255,255,0.10)",
+                  border: "1px solid var(--df-border-strong)",
                   borderRadius: 8,
                   fontFamily: "var(--font-mono, monospace)",
                   fontSize: 11,
@@ -164,7 +164,7 @@ export function PnLSurfaceChart({ surface }: PnLSurfaceChartProps) {
                 }}
                 formatter={(v) => [Number(v).toFixed(2), "P&L"]}
               />
-              <ReferenceLine y={0} stroke="rgba(255,255,255,0.25)" strokeDasharray="3 3" />
+              <ReferenceLine y={0} stroke="var(--df-border-strong)" strokeDasharray="3 3" />
               <Line type="monotone" dataKey="pnl" stroke="#f5a623" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>

@@ -34,9 +34,7 @@ Thumbs.db
 .vscode/
 
 # ── Dev scratch / screenshots (not source) ───────────────────────────────────
-df_*.png
-df2_*.png
-df3_*.png
+df*.png
 new_*.png
 cb_*.png
 screenshot_*.png
@@ -45,3 +43,5 @@ analyze_spy.json
 _*.json
 backend/_smoke_*.py
 backend/_e2e_*.py
+frontend/_shot*.js
+_shot*.js

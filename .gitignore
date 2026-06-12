@@ -46,3 +46,6 @@ backend/_e2e_*.py
 frontend/_shot*.js
 _shot*.js
 frontend/_*.js
+
+# Local Claude Code config
+.claude/

@@ -20,6 +20,7 @@ import { ScenarioPanel } from "@/components/scenario/ScenarioPanel"
 import { ExplainProvider } from "@/components/explain/ExplainContext"
 import { ExplainDrawer } from "@/components/explain/ExplainDrawer"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { DeltaTerminal } from "@/components/DeltaTerminal"
 import { useAnalysisStream } from "@/hooks/useAnalysisStream"
 import { usePanelStatus } from "@/hooks/usePanelStatus"
 import type { HedgeRecommendation, PortfolioGreeks } from "@/types"
@@ -153,6 +154,11 @@ export default function Home() {
                   <p className="text-[11px] leading-snug" style={{ color: "var(--df-text-muted,#7c828a)" }}>{p.v}</p>
                 </div>
               ))}
+            </div>
+
+            {/* Streaming, blinking "live pipeline" terminal */}
+            <div className="mt-9 w-full max-w-xl">
+              <DeltaTerminal />
             </div>
           </div>
         </div>

@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
+// Inter — the high-legibility sans used across modern trading apps (Zerodha
+// Kite, Sensibull, Coinbase/Binance-class UIs). Drives BOTH the UI chrome and,
+// with tabular figures, all numeric data (see `.font-mono` in globals.css).
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const robotoMono = Roboto_Mono({
+// JetBrains Mono — true monospace, reserved for the literal terminal
+// (DeltaTerminal) + terminal labels. Crisper than Roboto Mono at small sizes.
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
@@ -28,7 +33,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('df-theme')||(wi
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="dark" className="theme-preload" suppressHydrationWarning>
-      <body className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased min-h-screen`}>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Providers>{children}</Providers>
       </body>

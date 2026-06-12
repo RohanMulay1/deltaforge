@@ -41,12 +41,6 @@ const DISCLAIMER = "Informational only. Not investment advice. No live execution
 
 const QUICK_PICKS = ["SPY", "QQQ", "NVDA", "AAPL", "TSLA", "AMD"]
 
-const VALUE_PROPS = [
-  { k: "Real Wolfram kernel", v: "Greeks via symbolic D[BS], not an LLM guess" },
-  { k: "Reproducible", v: "Every number ships its exact WL expression" },
-  { k: "Delta-neutral hedge", v: "NMinimize against your live portfolio" },
-]
-
 function QuickPicks({ onPick }: { onPick: (s: string) => void }) {
   return (
     <div className="flex items-center justify-center gap-2 flex-wrap">
@@ -101,65 +95,49 @@ export default function Home() {
           </span>
           <ThemeToggle />
         </div>
-        <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-16">
-          <div className="w-full max-w-2xl flex flex-col items-center">
-            <div className="term-label mb-4" style={{ color: "var(--df-accent,#f5a623)" }}>
-              ◢ options risk terminal
-            </div>
-            <h1
-              className="font-mono text-5xl sm:text-6xl font-bold mb-4"
-              style={{ color: "var(--df-text,#e9ebee)", letterSpacing: "-2px", lineHeight: 1 }}
-            >
-              DELTA<span style={{ color: "var(--df-accent, #f5a623)" }}>FORGE</span>
-            </h1>
+        <div className="relative z-10 flex min-h-screen items-center justify-center px-4 sm:px-6 pt-20 pb-12">
+          <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
 
-            <p className="mb-9 text-base tracking-wide text-center max-w-md leading-relaxed" style={{ color: "var(--df-text-dim, #9aa1ab)" }}>
-              Options risk &amp; delta-neutral hedging, computed by a real Wolfram kernel.
-              <br />
-              <span className="text-sm" style={{ color: "var(--df-text-muted,#616773)" }}>Symbolic math doesn&apos;t hallucinate. </span>
-              <span className="text-sm" style={{ color: "var(--df-accent, #f5a623)" }}>It computes.</span>
-            </p>
-
-            {/* Selector card */}
-            <div
-              className="w-full max-w-xl px-7 py-7 rounded-2xl flex flex-col items-center gap-5"
-              style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", backdropFilter: "blur(20px)", boxShadow: "0 24px 60px rgba(0,0,0,0.45)" }}
-            >
-              <div className="w-full">
-                <div className="text-[10px] font-bold uppercase tracking-widest mb-2.5" style={{ color: "var(--df-text-muted,#7c828a)" }}>
-                  Choose an underlying
-                </div>
-                <AnalyzeForm onAnalyze={handleAnalyze} isStreaming={isStreaming} error={error} />
+            {/* LEFT — pitch + action */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="term-label mb-4" style={{ color: "var(--df-accent,#f5a623)" }}>
+                ◢ options risk terminal
               </div>
-              <div className="w-full pt-1 flex flex-col gap-2.5">
-                <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "var(--df-text-muted,#7c828a)" }}>
-                  Or jump straight in
-                </span>
-                <QuickPicks onPick={(s) => handleAnalyze(s, 7)} />
+              <h1
+                className="font-mono text-5xl sm:text-6xl font-bold mb-4"
+                style={{ color: "var(--df-text,#e9ebee)", letterSpacing: "-2px", lineHeight: 1 }}
+              >
+                DELTA<span style={{ color: "var(--df-accent, #f5a623)" }}>FORGE</span>
+              </h1>
+
+              <p className="mb-7 text-base tracking-wide max-w-md leading-relaxed" style={{ color: "var(--df-text-dim, #9aa1ab)" }}>
+                Options risk &amp; delta-neutral hedging, computed by a real Wolfram kernel.
+                <br />
+                <span className="text-sm" style={{ color: "var(--df-text-muted,#616773)" }}>Symbolic math doesn&apos;t hallucinate. </span>
+                <span className="text-sm" style={{ color: "var(--df-accent, #f5a623)" }}>It computes.</span>
+              </p>
+
+              {/* Selector card */}
+              <div
+                className="w-full max-w-xl px-6 py-6 rounded-2xl flex flex-col gap-4"
+                style={{ background: "var(--df-panel)", border: "1px solid var(--df-border-strong)", boxShadow: "0 24px 60px rgba(0,0,0,0.30)" }}
+              >
+                <div className="w-full">
+                  <div className="term-label mb-2.5">Choose an underlying</div>
+                  <AnalyzeForm onAnalyze={handleAnalyze} isStreaming={isStreaming} error={error} />
+                </div>
+                <div className="w-full pt-1 flex flex-col gap-2.5">
+                  <span className="term-label">Or jump straight in</span>
+                  <QuickPicks onPick={(s) => handleAnalyze(s, 7)} />
+                </div>
               </div>
             </div>
 
-            {/* Credibility strip */}
-            <div className="mt-9 grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-xl">
-              {VALUE_PROPS.map((p) => (
-                <div
-                  key={p.k}
-                  className="px-4 py-3.5 rounded-xl"
-                  style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}
-                >
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#2bd4a0" }} />
-                    <span className="text-[11px] font-bold" style={{ color: "var(--df-text,#fff)" }}>{p.k}</span>
-                  </div>
-                  <p className="text-[11px] leading-snug" style={{ color: "var(--df-text-muted,#7c828a)" }}>{p.v}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Streaming, blinking "live pipeline" terminal */}
-            <div className="mt-9 w-full max-w-xl">
+            {/* RIGHT — streaming terminal (symmetric to the action card) */}
+            <div className="w-full">
               <DeltaTerminal />
             </div>
+
           </div>
         </div>
       </main>

@@ -53,8 +53,8 @@ export function DeltaTerminal() {
         padding: "16px 18px",
         fontFamily: "var(--font-mono), ui-monospace, monospace",
         fontSize: 12,
-        lineHeight: "20px",
-        minHeight: 224,
+        lineHeight: "21px",
+        minHeight: 296,
       }}
     >
       <div className="flex items-center gap-2 mb-3">

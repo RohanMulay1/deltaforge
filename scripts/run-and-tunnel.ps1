@@ -5,12 +5,13 @@
   running, opens a free Cloudflare quick-tunnel to it, and prints the public
   https URL to paste into your frontend's NEXT_PUBLIC_API_URL.
 
-  Usage:   powershell -ExecutionPolicy Bypass -File .\run-and-tunnel.ps1
+  Usage:   powershell -ExecutionPolicy Bypass -File .\scripts\run-and-tunnel.ps1
   Stop:    Ctrl+C  (cleans up anything this script started)
 #>
 
 $ErrorActionPreference = "Stop"
-$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+# Repo root = parent of this script's folder (scripts/).
+$root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $port = 8000
 $healthUrl = "http://127.0.0.1:$port/health"
 

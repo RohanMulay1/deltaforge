@@ -46,7 +46,7 @@ already does real Wolfram.
 The repo ships a launcher that boots the backend (if not already up), opens the tunnel, and prints
 the public URL — verified working (`engine_in_use: wolfram` reachable over the tunnel):
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\run-and-tunnel.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\run-and-tunnel.ps1
 ```
 It reuses an already-running backend, reports kernel status, prints the `https://….trycloudflare.com`
 URL to paste into the frontend, and cleans up on Ctrl+C. The manual equivalent is below.

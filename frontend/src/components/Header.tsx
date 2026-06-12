@@ -33,9 +33,7 @@ export function Header() {
       className="sticky top-0 z-50 w-full"
       style={{
         height: 52,
-        background: "rgba(8,9,12,0.88)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
+        background: "var(--df-bg, #08090c)",
         borderBottom: "1px solid var(--df-border-strong, rgba(255,255,255,0.11))",
       }}
     >

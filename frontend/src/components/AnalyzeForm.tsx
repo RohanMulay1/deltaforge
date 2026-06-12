@@ -58,7 +58,7 @@ export default function AnalyzeForm({
           )}
           <div
             className="flex flex-row items-center gap-0.5 p-1"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12 }}
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6 }}
           >
             {DTE_OPTIONS.map((opt) => {
               const on = dteMax === opt.value
@@ -69,14 +69,14 @@ export default function AnalyzeForm({
                   onClick={() => setDteMax(opt.value)}
                   className="font-mono text-xs font-semibold transition-all"
                   style={{
-                    borderRadius: 9,
+                    borderRadius: 4,
                     padding: "7px 13px",
                     height: 34,
                     background: on ? "var(--df-accent, #f5a623)" : "transparent",
                     color: on ? "#0a0a0a" : "var(--df-text-dim, #a8acb3)",
                     border: "none",
                     cursor: "pointer",
-                    boxShadow: on ? "0 2px 12px rgba(245,166,35,0.35)" : "none",
+                    boxShadow: "none",
                   }}
                 >
                   {opt.label}

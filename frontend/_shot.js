@@ -1,0 +1,10 @@
+const { chromium } = require("playwright");
+const O="C:/Users/rohan/deltaforge";
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1600,height:1000}});
+await p.goto("http://localhost:3000",{waitUntil:"networkidle",timeout:60000});await p.waitForTimeout(2500);
+await p.screenshot({path:`${O}/df4_landing.png`,fullPage:true});console.log("landing");
+await p.keyboard.press("Escape");await p.mouse.click(20,20);await p.waitForTimeout(400);
+await p.getByRole("button",{name:/run analysis/i}).first().click();console.log("run");
+await Promise.race([p.getByText(/options chain/i).first().waitFor({timeout:45000}).catch(()=>null),p.waitForTimeout(42000)]);
+await p.waitForTimeout(6000);await p.screenshot({path:`${O}/df4_dashboard.png`,fullPage:true});console.log("dash");
+await b.close();})().catch(e=>{console.error("FATAL",e);process.exit(1)});

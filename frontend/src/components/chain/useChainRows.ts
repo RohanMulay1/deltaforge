@@ -37,6 +37,9 @@ export interface ChainRowsResult {
   /** Index of the row nearest spot, for ATM-anchored scroll. -1 when empty. */
   atmIndex: number;
   maxVolume: number;
+  maxOpenInterest: number;
+  /** Strike carrying the single largest open interest — the pin / max-pain magnet. */
+  pinStrike: number | null;
 }
 
 function sortByStrike(a: OptionQuote, b: OptionQuote): number {
@@ -53,11 +56,19 @@ export function useChainRows(
     const ordered = [...calls, ...puts];
 
     let maxVolume = 1;
+    let maxOpenInterest = 1;
+    let pinStrike: number | null = null;
+    let pinOI = -1;
     let atmIndex = -1;
     let atmDistance = Number.POSITIVE_INFINITY;
 
     const rows: ChainRow[] = ordered.map((quote, index) => {
       maxVolume = Math.max(maxVolume, quote.volume);
+      maxOpenInterest = Math.max(maxOpenInterest, quote.open_interest);
+      if (quote.open_interest > pinOI) {
+        pinOI = quote.open_interest;
+        pinStrike = quote.strike;
+      }
       const distance = Math.abs(quote.strike - spotPrice);
       if (distance < atmDistance) {
         atmDistance = distance;
@@ -79,6 +90,6 @@ export function useChainRows(
       };
     });
 
-    return { rows, atmIndex, maxVolume };
+    return { rows, atmIndex, maxVolume, maxOpenInterest, pinStrike };
   }, [chain, spotPrice]);
 }

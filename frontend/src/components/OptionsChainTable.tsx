@@ -35,28 +35,26 @@ function getOfiBackground(ofi: number): string {
   return "transparent"
 }
 
-const COLUMNS = ["STRIKE", "TYPE", "DELTA", "IV", "BID", "ASK", "VOL", "OFI"] as const
+const COLUMNS = ["STRIKE", "TYPE", "DELTA", "IV", "BID", "ASK", "VOL", "OI", "OFI"] as const
 
-const GRID_TEMPLATE = "1.3fr 0.8fr 0.9fr 0.8fr 0.8fr 0.8fr 1.4fr 0.9fr"
+const GRID_TEMPLATE = "1.25fr 0.7fr 0.85fr 0.62fr 0.68fr 0.68fr 1.1fr 1.1fr 0.78fr"
 
-function VolumeBar({ vol, maxVol }: { vol: number; maxVol: number }) {
-  const ratio = maxVol > 0 ? Math.min(vol / maxVol, 1) : 0
+function MetricBar({ value, max, fill }: { value: number; max: number; fill: string }) {
+  const ratio = max > 0 ? Math.min(value / max, 1) : 0
+  const compact = value >= 1000 ? `${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}k` : value.toLocaleString()
   return (
-    <div className="flex items-center gap-2">
-      <span className="font-mono text-xs tabular-nums" style={{ color: "var(--df-text-dim, #a8acb3)" }}>
-        {vol.toLocaleString()}
+    <div className="flex items-center gap-2 min-w-0">
+      <span className="font-mono text-xs tabular-nums shrink-0" style={{ color: "var(--df-text-dim, #a8acb3)", width: 34 }}>
+        {compact}
       </span>
-      <div
-        className="shrink-0 rounded-full overflow-hidden"
-        style={{ width: 44, height: 4, background: "rgba(255,255,255,0.07)" }}
-      >
-        <div className="h-full rounded-full" style={{ width: `${ratio * 44}px`, background: "rgba(255,255,255,0.20)" }} />
+      <div className="shrink-0 rounded-full overflow-hidden" style={{ width: 40, height: 4, background: "rgba(255,255,255,0.07)" }}>
+        <div className="h-full rounded-full" style={{ width: `${ratio * 40}px`, background: fill }} />
       </div>
     </div>
   )
 }
 
-function ChainCells({ row, maxVol }: { row: ChainRow; maxVol: number }) {
+function ChainCells({ row, maxVol, maxOI, isPin }: { row: ChainRow; maxVol: number; maxOI: number; isPin: boolean }) {
   const isCall = row.type === "call"
   const ofiColor = row.ofi >= 0 ? "var(--df-up, #05b169)" : "var(--df-down, #cf202f)"
   const deltaColor = row.delta >= 0 ? "var(--df-up, #05b169)" : "var(--df-down, #cf202f)"
@@ -71,6 +69,15 @@ function ChainCells({ row, maxVol }: { row: ChainRow; maxVol: number }) {
             style={{ background: "rgba(245,166,35,0.18)", color: "var(--df-accent, #f5a623)", border: "1px solid rgba(245,166,35,0.3)" }}
           >
             ATM
+          </span>
+        )}
+        {isPin && (
+          <span
+            className="font-mono text-[8px] font-bold px-1.5 py-0.5 rounded-full"
+            title="Max open interest — pin / max-pain magnet"
+            style={{ background: "rgba(56,207,224,0.16)", color: "var(--df-cyan, #38cfe0)", border: "1px solid rgba(56,207,224,0.3)" }}
+          >
+            PIN
           </span>
         )}
       </div>
@@ -114,7 +121,11 @@ function ChainCells({ row, maxVol }: { row: ChainRow; maxVol: number }) {
       </div>
 
       <div className="flex items-center">
-        <VolumeBar vol={row.volume} maxVol={maxVol} />
+        <MetricBar value={row.volume} max={maxVol} fill="rgba(255,255,255,0.20)" />
+      </div>
+
+      <div className="flex items-center">
+        <MetricBar value={row.openInterest} max={maxOI} fill="rgba(245,166,35,0.45)" />
       </div>
 
       <div
@@ -130,7 +141,7 @@ function ChainCells({ row, maxVol }: { row: ChainRow; maxVol: number }) {
 
 export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsChainTableProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const { rows: chainRows, atmIndex, maxVolume } = useChainRows(rows, spotPrice)
+  const { rows: chainRows, atmIndex, maxVolume, maxOpenInterest, pinStrike } = useChainRows(rows, spotPrice)
 
   const virtualizer = useVirtualizer({
     count: chainRows.length,
@@ -164,7 +175,16 @@ export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsCh
           <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ background: "var(--df-up, #05b169)" }} />
           <span className="text-[10px] font-mono" style={{ color: "var(--df-up, #05b169)" }}>Live</span>
         </div>
-        <span className="ml-auto font-mono text-[10px]" style={{ color: "var(--df-text-muted, #7c828a)" }}>
+        {pinStrike !== null && (
+          <span
+            className="ml-auto font-mono text-[10px] font-bold px-2 py-0.5 rounded-md"
+            title="Strike with the largest open interest"
+            style={{ background: "rgba(56,207,224,0.12)", color: "var(--df-cyan, #38cfe0)", border: "1px solid rgba(56,207,224,0.25)" }}
+          >
+            MAX-PAIN {pinStrike}
+          </span>
+        )}
+        <span className={`font-mono text-[10px] ${pinStrike !== null ? "" : "ml-auto"}`} style={{ color: "var(--df-text-muted, #7c828a)" }}>
           {chainRows.length} rows
         </span>
       </div>
@@ -207,7 +227,12 @@ export function OptionsChainTable({ rows, spotPrice, symbol = "–" }: OptionsCh
                   background: isAtmAnchor ? "rgba(245,166,35,0.06)" : "transparent",
                 }}
               >
-                <ChainCells row={row} maxVol={maxVolume} />
+                <ChainCells
+                  row={row}
+                  maxVol={maxVolume}
+                  maxOI={maxOpenInterest}
+                  isPin={pinStrike !== null && row.strike === pinStrike}
+                />
               </div>
             )
           })}

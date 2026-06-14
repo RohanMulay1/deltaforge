@@ -24,6 +24,8 @@ fi
 # Resolve repo root + the invoking (non-root) user so systemd doesn't run as root.
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 RUN_USER="${SUDO_USER:-$(whoami)}"
+RUN_HOME="$(getent passwd "$RUN_USER" | cut -d: -f6)"
+RUN_HOME="${RUN_HOME:-/home/$RUN_USER}"
 VENV="$REPO_ROOT/.venv"
 ENV_FILE="$REPO_ROOT/.env"
 
@@ -90,6 +92,9 @@ Type=simple
 User=$RUN_USER
 WorkingDirectory=$REPO_ROOT/backend
 EnvironmentFile=$ENV_FILE
+# HOME is required so the Wolfram kernel finds its per-user license
+# (~/.WolframEngine) — without it the kernel can't activate and degrades to fallback.
+Environment=HOME=$RUN_HOME
 ExecStart=$VENV/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000
 Restart=always
 RestartSec=5

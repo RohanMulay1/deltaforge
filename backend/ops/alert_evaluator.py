@@ -184,12 +184,13 @@ async def _run_pipeline(
     The pipeline produces the canonical ``AnalyzeResponse`` (ARCHITECTURE.md §6).
     """
     from graph.pipeline import run_analysis  # WS2 entrypoint
+    from models.schemas_requests import AnalyzeRequest
 
     result = await run_analysis(
-        symbol=symbol,
-        dte_max=_SWEEP_DTE_MAX,
-        market_provider=context.market_provider,
-        wolfram=context.wolfram,
+        AnalyzeRequest(symbol=symbol, dte_max=_SWEEP_DTE_MAX),
+        service=context.wolfram,
+        provider=context.market_provider,
+        sessionmaker=context.sessionmaker,
     )
     if not isinstance(result, AnalyzeResponse):
         # The pipeline contract is AnalyzeResponse; coerce defensively so a

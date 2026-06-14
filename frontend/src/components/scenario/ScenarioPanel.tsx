@@ -70,7 +70,7 @@ export function ScenarioPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <span className="text-[11px] font-bold tracking-widest uppercase text-white" style={{ letterSpacing: "0.1em" }}>
+          <span className="text-[11px] font-bold tracking-widest uppercase" style={{ letterSpacing: "0.1em", color: "var(--df-text)" }}>
             Scenario P&L Surface
           </span>
           {surface && (

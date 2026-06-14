@@ -214,8 +214,8 @@ export function ExplainDrawer() {
               Wolfram Provenance
             </span>
             <span
-              className="text-sm font-semibold text-white truncate"
-              style={{ letterSpacing: "-0.01em" }}
+              className="text-sm font-semibold truncate"
+              style={{ letterSpacing: "-0.01em", color: "var(--df-text)" }}
             >
               {title}
             </span>
@@ -224,8 +224,8 @@ export function ExplainDrawer() {
             type="button"
             onClick={close}
             aria-label="Close"
-            className="shrink-0 ml-3 w-7 h-7 flex items-center justify-center rounded-lg text-white"
-            style={{ background: "var(--df-border)", border: "1px solid var(--df-border-strong)" }}
+            className="shrink-0 ml-3 w-7 h-7 flex items-center justify-center rounded-lg"
+            style={{ background: "var(--df-border)", border: "1px solid var(--df-border-strong)", color: "var(--df-text)" }}
           >
             ×
           </button>
@@ -265,7 +265,7 @@ export function ExplainDrawer() {
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl px-3.5 py-3" style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}>
               <SectionLabel>Numeric</SectionLabel>
-              <div className="font-mono text-sm font-semibold tabular-nums text-white">{numeric}</div>
+              <div className="font-mono text-sm font-semibold tabular-nums" style={{ color: "var(--df-text)" }}>{numeric}</div>
             </div>
             <div className="rounded-xl px-3.5 py-3" style={{ background: "var(--df-surface)", border: "1px solid var(--df-border)" }}>
               <SectionLabel>Kernel Time</SectionLabel>

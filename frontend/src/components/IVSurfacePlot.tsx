@@ -44,7 +44,7 @@ export default function IVSurfacePlot({ options, height = 190 }: IVSurfacePlotPr
         className="flex items-center justify-between px-5 py-3.5"
         style={{ borderBottom: "1px solid var(--df-border)" }}
       >
-        <span className="text-[11px] font-bold uppercase tracking-widest text-white" style={{ letterSpacing: "0.1em" }}>
+        <span className="text-[11px] font-bold uppercase tracking-widest" style={{ letterSpacing: "0.1em", color: "var(--df-text)" }}>
           IV Surface  —  Wolfram Calibration
         </span>
         <span

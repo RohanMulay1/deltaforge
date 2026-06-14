@@ -54,7 +54,7 @@ export function PositionRow({ position, onRemove }: PositionRowProps) {
       </span>
 
       <div className="min-w-0">
-        <div className="font-mono text-xs font-semibold text-white truncate">
+        <div className="font-mono text-xs font-semibold truncate" style={{ color: "var(--df-text)" }}>
           {position.symbol}
           {isOption && position.strike != null && (
             <span style={{ color: DIM }}> {position.strike}</span>

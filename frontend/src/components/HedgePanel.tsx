@@ -21,7 +21,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
         className="flex items-center justify-between px-5 py-4"
         style={{ borderBottom: "1px solid var(--df-border)" }}
       >
-        <span className="text-[11px] font-bold tracking-widest uppercase text-white" style={{ letterSpacing: "0.1em" }}>
+        <span className="text-[11px] font-bold tracking-widest uppercase" style={{ letterSpacing: "0.1em", color: "var(--df-text)" }}>
           OPTIMAL DELTA-NEUTRAL HEDGE
         </span>
         <span
@@ -117,7 +117,7 @@ export default function HedgePanel({ hedge }: HedgePanelProps) {
             <div className="font-mono text-[9px] font-semibold uppercase tracking-widest mb-2" style={{ color: "#7c828a" }}>
               STRIKE
             </div>
-            <div className="font-mono text-sm font-semibold tabular-nums text-white">
+            <div className="font-mono text-sm font-semibold tabular-nums" style={{ color: "var(--df-text)" }}>
               ${hedge.strike_to_trade.toFixed(0)}
             </div>
           </div>

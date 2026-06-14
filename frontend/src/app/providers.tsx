@@ -11,11 +11,14 @@ import { useState, type ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 
 import { createQueryClient } from "@/lib/query/queryClient";
+import { AnalysisStreamProvider } from "@/components/analysis/AnalysisStreamProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(createQueryClient);
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AnalysisStreamProvider>{children}</AnalysisStreamProvider>
+    </QueryClientProvider>
   );
 }

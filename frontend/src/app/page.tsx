@@ -5,7 +5,6 @@ import { useState } from "react"
 import { Header } from "@/components/Header"
 import { HUDCards } from "@/components/HUDCards"
 import { OptionsChainTable } from "@/components/OptionsChainTable"
-import IVSurfacePlot from "@/components/IVSurfacePlot"
 import HedgePanel from "@/components/HedgePanel"
 import AnalyzeForm from "@/components/AnalyzeForm"
 import { PanelState } from "@/components/feedback/PanelState"
@@ -21,7 +20,7 @@ import { ExplainProvider } from "@/components/explain/ExplainContext"
 import { ExplainDrawer } from "@/components/explain/ExplainDrawer"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { DeltaTerminal } from "@/components/DeltaTerminal"
-import { useAnalysisStream } from "@/hooks/useAnalysisStream"
+import { useAnalysisStreamContext } from "@/components/analysis/AnalysisStreamProvider"
 import { usePanelStatus } from "@/hooks/usePanelStatus"
 import type { HedgeRecommendation, PortfolioGreeks } from "@/types"
 
@@ -60,7 +59,7 @@ function QuickPicks({ onPick }: { onPick: (s: string) => void }) {
 }
 
 export default function Home() {
-  const stream = useAnalysisStream()
+  const stream = useAnalysisStreamContext()
   const { partial, stages, isStreaming, error } = stream
   const hasError = error !== null
   const hasStarted = stream.symbol !== null
@@ -74,7 +73,6 @@ export default function Home() {
   // Per-panel 4-state derived from the stream's stage map (§10.1).
   const hudStatus = usePanelStatus(stages, "greeks", hasError)
   const marketStatus = usePanelStatus(stages, "market_data", hasError)
-  const ivStatus = usePanelStatus(stages, "iv_surface", hasError)
   const hedgeStatus = usePanelStatus(stages, "hedge", hasError)
   const summaryStatus = usePanelStatus(stages, "summary", hasError)
 
@@ -268,15 +266,6 @@ export default function Home() {
 
               {/* Right stack */}
               <div className="flex flex-col gap-4 min-w-0">
-                <PanelState
-                  status={ivStatus}
-                  errorMessage={error}
-                  emptyTitle="IV surface pending"
-                  skeleton={<CardSkeleton height={190} />}
-                >
-                  <IVSurfacePlot options={chain} />
-                </PanelState>
-
                 <PanelState
                   status={hedgeStatus}
                   errorMessage={error}

@@ -1,9 +1,41 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { SymbolicEngineBadge } from "@/components/status/SymbolicEngineBadge"
 import { ThemeToggle } from "@/components/ThemeToggle"
+
+const NAV_ITEMS = [
+  { href: "/", label: "Dashboard" },
+  { href: "/iv-surface", label: "IV Surface" },
+] as const
+
+function HeaderNav() {
+  const pathname = usePathname()
+  return (
+    <nav className="hidden md:flex items-center gap-1">
+      {NAV_ITEMS.map((item) => {
+        const active = pathname === item.href
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="font-mono text-[11px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-md transition-all"
+            style={{
+              background: active ? "var(--df-accent-soft, rgba(245,166,35,0.12))" : "transparent",
+              color: active ? "var(--df-accent,#f5a623)" : "var(--df-text-dim,#9aa1ab)",
+              border: `1px solid ${active ? "rgba(245,166,35,0.40)" : "transparent"}`,
+            }}
+          >
+            {item.label}
+          </Link>
+        )
+      })}
+    </nav>
+  )
+}
 
 function StatusDot({ color }: { color: string }) {
   return (
@@ -53,6 +85,9 @@ export function Header() {
             options risk terminal
           </span>
         </div>
+
+        {/* Primary nav */}
+        <HeaderNav />
 
         {/* Live clock (mono, terminal) */}
         <div className="flex-1 flex justify-center">

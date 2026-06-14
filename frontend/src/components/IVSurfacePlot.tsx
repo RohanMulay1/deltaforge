@@ -5,6 +5,8 @@ import type { OptionQuote } from "@/types";
 
 interface IVSurfacePlotProps {
   options: OptionQuote[];
+  /** Chart body height in px. Defaults to the compact dashboard size. */
+  height?: number;
 }
 
 interface TooltipPayload {
@@ -23,7 +25,7 @@ const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Toolti
   );
 };
 
-export default function IVSurfacePlot({ options }: IVSurfacePlotProps) {
+export default function IVSurfacePlot({ options, height = 190 }: IVSurfacePlotProps) {
   const maxOI = Math.max(...options.map((o) => o.open_interest), 1);
 
   const calls = options.filter((o) => o.type === "call").map((o) => ({
@@ -53,7 +55,7 @@ export default function IVSurfacePlot({ options }: IVSurfacePlotProps) {
         </span>
       </div>
 
-      <div style={{ height: 190, padding: "8px 0 0" }}>
+      <div style={{ height, padding: "8px 0 0" }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 8, right: 20, bottom: 20, left: 10 }}>
             <XAxis
